@@ -28,6 +28,11 @@ public class Main {
         /*System.out.println(s.minWindow("ADOBECODEBANC", "ABC"));*/
         /*System.out.println(s.lengthOfLongestSubstring("ABCDSEISLXMFJSAM"));*/
         /*s.threeSum(new int[]{-2,0,0,2,2});*/
-        s.solveNQueens(4);
+//        s.solveNQueens(4);
+        //s.combine(4, 2);
+        //char[][] board = {new char[]{'A','B','C','E'}, new char[]{'S','F','C','S'}, new char[]{'A','D','E','E'}};
+        //System.out.println(s.exist(board, "ABCB"));
+        //s.subsets(new int[]{1, 2, 3});
+        System.out.println(s.largestRectangleArea(new int[]{2,0,1,0,1,0}));
     }
 }

@@ -774,4 +774,92 @@ public class Solution {
         }
     }
 
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+        getCombineFor(1, n, k, new ArrayList<Integer>(), result);
+        return result;
+    }
+
+    private void getCombineFor(int begin, int n, int k, ArrayList<Integer> current, List<List<Integer>> result) {
+        if (k == 0) result.add(current);
+        if (begin > n) return;
+        for (int i = begin; i <= n; i++) {
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.addAll(current);
+            temp.add(i);
+            getCombineFor(i + 1, n, k - 1, temp, result);
+        }
+    }
+
+    public boolean exist(char[][] board, String word) {
+        if (word.equals("")) return true;
+        if (board.length == 0) return false;
+        boolean exist = false;
+        char firstChar = word.charAt(0);
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                char current = board[i][j];
+                if (current == firstChar) {
+                    int[] index = new int[]{i, j};
+                    List<int[]> usedIndex = Arrays.asList(index);
+                    exist = exist || existRecur(i, j, board, usedIndex, word.substring(1));
+                }
+            }
+        }
+        return exist;
+    }
+
+    private boolean existRecur(int i, int j, char[][] board, List<int[]> usedIndex, String word) {
+        return word.equals("") || validateAndContinue(i + 1, j, board, usedIndex, word) || validateAndContinue(i - 1, j, board, usedIndex, word) || validateAndContinue(i, j + 1, board, usedIndex, word) || validateAndContinue(i, j - 1, board, usedIndex, word);
+    }
+
+    private boolean validateAndContinue(int i, int j, char[][] board, List<int[]> usedIndex, String word) {
+        char firstChar = word.charAt(0);
+        int m = board.length;
+        int n = board[0].length;
+        if (i >= 0 && i < m && j >= 0 && j < n && board[i][j] == firstChar && !indexUsed(i, j, usedIndex)) {
+            List<int[]> tempList = new ArrayList<>();
+            tempList.addAll(usedIndex);
+            tempList.add(new int[]{i, j});
+            return existRecur(i, j, board, tempList, word.substring(1));
+        }
+        return false;
+    }
+
+    private boolean indexUsed(int i, int j, List<int[]> usedIndex) {
+        for (int[] index: usedIndex)
+            if (index[0] == i && index[1] == j)
+                return true;
+        return false;
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        int length = nums.length;
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < Math.pow(2, length); i++) {
+            List<Integer> subset = new ArrayList<>();
+            String s = Integer.toBinaryString(i);
+            for (int j = s.length() - 1; j >= 0; j--) {
+                if (s.charAt(j) == '1') subset.add(nums[s.length() - 1 - j]);
+            }
+            result.add(subset);
+        }
+        return result;
+    }
+
+    public int largestRectangleArea(int[] heights) {
+        Stack<Integer> stack = new Stack<>();
+        int max = 0;
+        int i = 0;
+        int begin = 0;
+        while (i < heights.length) {
+            int height = heights[i];
+            if (stack.empty() || stack.peek() <= height) {
+                stack.push(height);
+            } else {
+                stack.peek();
+            }
+        }
+    }
+
 }
